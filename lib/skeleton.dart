@@ -1,7 +1,9 @@
+import 'package:counter_app_with_cubit_bloc/cubit/theme/theme_cubit.dart';
 import 'package:counter_app_with_cubit_bloc/pages/counter_page_with_bloc.dart';
 import 'package:counter_app_with_cubit_bloc/pages/counter_page_with_cubit.dart';
 import 'package:counter_app_with_cubit_bloc/pages/counter_page_with_set_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Skeleton extends StatefulWidget {
   const Skeleton({super.key});
@@ -15,7 +17,16 @@ class _SkeletonState extends State<Skeleton> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Counter App'), centerTitle: true),
+      appBar: AppBar(
+        title: Text('Counter App'),
+        centerTitle: true,
+        leading: BlocBuilder<ThemeCubit, ThemeEnum>(
+          builder: (context, state) => IconButton(
+            onPressed: context.read<ThemeCubit>().toggleTheme,
+            icon: Icon(context.read<ThemeCubit>().icon),
+          ),
+        ),
+      ),
       body: IndexedStack(
         index: _currentIndex,
         children: [
